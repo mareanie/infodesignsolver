@@ -1,0 +1,2 @@
+# infodesignsolver
+Information design solvers
