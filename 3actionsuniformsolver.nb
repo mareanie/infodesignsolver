@@ -1,0 +1,310 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     12120,        302]
+NotebookOptionsPosition[     11770,        288]
+NotebookOutlinePosition[     12161,        304]
+CellTagsIndexPosition[     12118,        301]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"An", " ", "information", " ", "design", " ", "problem", " ", 
+    RowBox[{"solver", ".", " ", "Applicable"}], " ", "to", " ", "the", " ", 
+    "information", " ", "design", " ", "problem", " ", "in", " ", "Gentzkow", 
+    " ", "and", " ", "Kamenica", " ", 
+    RowBox[{"(", "2016", ")"}], " ", "with", " ", "three", " ", "actions", 
+    " ", "and", " ", "uniform", " ", 
+    RowBox[{"prior", "."}]}], "*)"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"The", " ", "objective", " ", "function"}], ";", " ", 
+     RowBox[{
+     "r", " ", "is", " ", "the", " ", "first", " ", "cutoff", " ", "and", " ",
+       "s", " ", "is", " ", "the", " ", 
+      RowBox[{"second", ".", " ", "For"}], " ", "simplicity"}]}], ",", " ", 
+    RowBox[{
+    "I", " ", "assume", " ", "that", " ", "the", " ", "payoff", " ", "from", 
+     " ", "action", " ", "a0"}], ",", " ", 
+    RowBox[{"the", " ", "lowest", " ", "action"}], ",", " ", 
+    RowBox[{"is", " ", "0"}], ",", " ", 
+    RowBox[{
+    "the", " ", "payoff", " ", "from", " ", "the", " ", "middle", " ", 
+     "action", " ", "a1", " ", "is", " ", "1"}], ",", " ", 
+    RowBox[{
+     RowBox[{
+     "and", " ", "the", " ", "payoff", " ", "from", " ", "the", " ", 
+      "highest", " ", "action", " ", "a2", " ", "is", " ", "l"}], ";", " ", 
+     RowBox[{
+     "this", " ", "is", " ", "without", " ", "loss", " ", "of", " ", 
+      "generality", " ", "because", " ", 
+      RowBox[{"it", "'"}], "s", " ", "just", " ", "a", " ", "matter", " ", 
+      "of", " ", 
+      RowBox[{"scaling", "."}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"f", "[", 
+     RowBox[{"z_", ",", "r_", ",", "s_", ",", "l_"}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"s", "-", 
+        RowBox[{"1", "/", "2"}], "-", "z"}], ")"}], "/", 
+      RowBox[{"(", 
+       RowBox[{"s", "-", "r"}], ")"}]}], "-", "r", "+", 
+     RowBox[{"Sqrt", "[", 
+      RowBox[{
+       RowBox[{"r", "^", "2"}], "-", 
+       RowBox[{"2", " ", "z"}]}], "]"}], "+", 
+     RowBox[{"l", "*", 
+      RowBox[{"(", 
+       RowBox[{"1", "-", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"s", "-", 
+           RowBox[{"1", "/", "2"}], "-", "z"}], ")"}], "/", 
+         RowBox[{"(", 
+          RowBox[{"s", "-", "r"}], ")"}]}]}], ")"}]}]}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Constraint", " ", "on", " ", "z"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"zConstraint", "[", "r_", "]"}], ":=", 
+     RowBox[{"0", "<=", "z", "<=", 
+      RowBox[{
+       RowBox[{"r", "^", "2"}], "/", "2"}]}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"Solver", ";", " ", "a0Prob"}], ",", " ", "a1Prob", ",", 
+     RowBox[{
+     "and", " ", "a2Prob", " ", "are", " ", "the", " ", "probability", " ", 
+      "that", " ", "low", " ", "action", " ", "a0"}], ",", " ", 
+     RowBox[{"middle", " ", "action", " ", "a1"}], ",", " ", 
+     RowBox[{
+     "and", " ", "high", " ", "action", " ", "a2", " ", "is", " ", "played"}],
+      ",", " ", "respectively", ",", " ", 
+     RowBox[{
+     "and", " ", "MaxValue", " ", "is", " ", "the", " ", "value", " ", "of", 
+      " ", "the", " ", 
+      RowBox[{"problem", ".", " ", "For"}], " ", "an", " ", "interpretation", 
+      " ", "of", " ", "z"}], ",", " ", 
+     RowBox[{"see", " ", "Gentzkow", " ", "and", " ", "Kamenica", " ", 
+      RowBox[{
+       RowBox[{"(", "2016", ")"}], ".", " ", "We"}], " ", "know", " ", "from",
+       " ", "Arieli"}], ",", " ", "Babichenko", ",", " ", "Smorodinsky", ",", 
+     
+     RowBox[{"and", " ", "Yamashita", " ", 
+      RowBox[{"(", "2023", ")"}], " ", "that", " ", "there", " ", "exists", 
+      " ", "a", " ", "deterministic", " ", 
+      RowBox[{"solution", ".", " ", "B0"}]}], ",", " ", "B1", ",", " ", 
+     RowBox[{
+     "and", " ", "B2", " ", "are", " ", "the", " ", "states", " ", "in", " ", 
+      "which", " ", "actions", " ", "a0"}], ",", " ", "a1", ",", " ", 
+     RowBox[{"a2", " ", "are", " ", "recommended"}], ",", " ", 
+     RowBox[{
+      RowBox[{"respectively", ".", " ", "It"}], " ", "is", " ", "not", " ", 
+      "difficult", " ", "to", " ", "show", " ", "that", " ", "B0", " ", 
+      "must", " ", "be", " ", "the", " ", "\"\<lowest part\>\"", "of", " ", 
+      "the", " ", "unit", " ", "interval"}], ",", " ", 
+     RowBox[{
+      RowBox[{
+      "and", " ", "B1", " ", "must", " ", "also", " ", "be", " ", "an", " ", 
+       "interval"}], ";", " ", 
+      RowBox[{
+      "B2", " ", "is", " ", "the", " ", "union", " ", "of", " ", "at", " ", 
+       "most", " ", "two", " ", 
+       RowBox[{"intervals", ".", " ", "Note"}], " ", "that", " ", "while", 
+       " ", "the", " ", "recommendation", " ", "probabilities", " ", "of", 
+       " ", "actions", " ", "are", " ", "generically", " ", "unique"}]}], ",",
+      " ", 
+     RowBox[{
+     "there", " ", "are", " ", "generally", " ", "other", " ", 
+      "deterministic", " ", 
+      RowBox[{"solutions", "."}]}]}], "*)"}], "\n", 
+   RowBox[{"Clear", "[", "findOpt", "]"}], "\n", 
+   RowBox[{
+    RowBox[{"findOpt", "[", 
+     RowBox[{
+      RowBox[{"r0_", "?", "NumericQ"}], ",", 
+      RowBox[{"s0_", "?", "NumericQ"}], ",", 
+      RowBox[{"l0_", "?", "NumericQ"}]}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "sol", ",", "zstar", ",", "fstar", ",", "prob0", ",", "prob1", ",", 
+        "prob2", ",", "B0", ",", "B1", ",", "B2"}], "}"}], ",", 
+      RowBox[{
+       RowBox[{"sol", "=", 
+        RowBox[{"Maximize", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"f", "[", 
+             RowBox[{"z", ",", "r0", ",", "s0", ",", "l0"}], "]"}], ",", 
+            RowBox[{"zConstraint", "[", "r0", "]"}]}], "}"}], ",", "z"}], 
+         "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"fstar", "=", 
+        RowBox[{"sol", "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"zstar", "=", 
+        RowBox[{"z", "/.", " ", 
+         RowBox[{"sol", "[", 
+          RowBox[{"[", "2", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"prob1", "=", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"s0", "-", 
+             RowBox[{"1", "/", "2"}], "-", "zstar"}], ")"}], "/", 
+           RowBox[{"(", 
+            RowBox[{"s0", "-", "r0"}], ")"}]}], ")"}], "-", "r0", "+", 
+         RowBox[{"Sqrt", "[", 
+          RowBox[{
+           RowBox[{"r0", "^", "2"}], "-", 
+           RowBox[{"2", " ", "zstar"}]}], "]"}]}]}], ";", "\n", "     ", 
+       RowBox[{"prob2", "=", 
+        RowBox[{"1", "-", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"s0", "-", 
+             RowBox[{"1", "/", "2"}], "-", "zstar"}], ")"}], "/", 
+           RowBox[{"(", 
+            RowBox[{"s0", "-", "r0"}], ")"}]}], ")"}]}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"prob0", "=", 
+        RowBox[{"1", "-", "prob1", "-", "prob2"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Chop", "[", 
+           RowBox[{"prob2", "-", 
+            RowBox[{"(", 
+             RowBox[{"1", "-", 
+              RowBox[{"2", " ", "s0"}]}], ")"}]}], "]"}], "==", "0"}], ",", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"B0", "=", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", "prob0"}], "}"}]}], ";", "\[IndentingNewLine]", 
+           RowBox[{"B1", "=", 
+            RowBox[{"{", 
+             RowBox[{"prob0", ",", 
+              RowBox[{"1", "-", 
+               RowBox[{"2", " ", "s0"}]}]}], "}"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"B2", "=", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"1", "-", 
+               RowBox[{"2", " ", "s0"}]}], ",", "1"}], "}"}]}], ";"}], ")"}], 
+         ",", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"B0", "=", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", "prob0"}], "}"}]}], ";", "\[IndentingNewLine]", 
+           RowBox[{"B1", "=", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"r0", "-", 
+               RowBox[{"prob1", "/", "2"}]}], ",", 
+              RowBox[{"r0", "+", 
+               RowBox[{"prob1", "/", "2"}]}]}], "}"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"B2", "=", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"prob0", ",", 
+                RowBox[{"r0", "-", 
+                 RowBox[{"prob1", "/", "2"}]}]}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"r0", "+", 
+                 RowBox[{"prob1", "/", "2"}]}], ",", "1"}], "}"}]}], "}"}]}], 
+           ";"}], ")"}]}], "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<zOptimal\>\"", "->", "zstar"}], ",", 
+         RowBox[{"\"\<MaxValue\>\"", "->", "fstar"}], ",", 
+         RowBox[{"\"\<a0Prob\>\"", "->", "prob0"}], ",", 
+         RowBox[{"\"\<a1Prob\>\"", "->", "prob1"}], ",", 
+         RowBox[{"\"\<a2Prob\>\"", "->", "prob2"}], ",", 
+         RowBox[{"\"\<B0\>\"", "->", "B0"}], ",", 
+         RowBox[{"\"\<B1\>\"", "->", "B1"}], ",", 
+         RowBox[{"\"\<B2\>\"", "->", "B2"}]}], "|>"}]}]}], "]"}]}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+     "Example", " ", "from", " ", "Gentzkow", " ", "and", " ", "Kamenica"}], 
+     ";", " ", 
+     RowBox[{
+     "try", " ", "it", " ", "with", " ", "other", " ", "parameter", " ", 
+      RowBox[{"values", "!"}], " ", "Please", " ", "make", " ", "sure", " ", 
+      "that", " ", "the", " ", "inputs", " ", "are", " ", "rational", " ", 
+      "when", " ", "you", " ", 
+      RowBox[{"try", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"findOpt", "[", 
+    RowBox[{
+     RowBox[{"1", "/", "3"}], ",", 
+     RowBox[{"2", "/", "3"}], ",", "3"}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.957310181246933*^9, 3.957310207496472*^9}, {
+   3.957310251174038*^9, 3.9573102753172903`*^9}, {3.957310314212769*^9, 
+   3.957310369405139*^9}, {3.957310532057436*^9, 3.957310541322012*^9}, {
+   3.9573105910151*^9, 3.957310598220536*^9}, {3.957310636895314*^9, 
+   3.957310700566321*^9}, {3.9573107315035963`*^9, 3.9573108532305737`*^9}, {
+   3.9573108842782288`*^9, 3.957310992331297*^9}, {3.9573110545294456`*^9, 
+   3.957311278556644*^9}, {3.957311337204987*^9, 3.957311346044078*^9}, {
+   3.957311986731429*^9, 3.957312002506833*^9}, {3.957312049265979*^9, 
+   3.9573120605751343`*^9}, {3.9573120998794937`*^9, 3.957312203412416*^9}, {
+   3.9573122582031183`*^9, 3.957312364326326*^9}, {3.957312418917449*^9, 
+   3.957312442075363*^9}, {3.95731247747922*^9, 3.957312493578946*^9}, {
+   3.9573129756793337`*^9, 3.957313090065261*^9}, 3.95731428177374*^9, {
+   3.95731437876648*^9, 
+   3.9573143936031*^9}},ExpressionUUID->"7441a9c5-4ca5-4e89-967a-\
+c93bcd8ff68b"]
+},
+WindowSize->{808, 850},
+WindowMargins->{{4, Automatic}, {Automatic, 4}},
+FrontEndVersion->"14.1 for Mac OS X ARM (64-bit) (July 16, 2024)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"7706374a-4ac6-43a5-9531-224e3a0176fa"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 11212, 266, 928, "Input",ExpressionUUID->"7441a9c5-4ca5-4e89-967a-c93bcd8ff68b"]
+}
+]
+*)
+
